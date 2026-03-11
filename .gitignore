@@ -13,6 +13,7 @@ node_modules/
 dist
 dist-ssr
 *.local
+.air.toml
 
 # Environment files
 .env
