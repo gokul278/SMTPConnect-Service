@@ -17,16 +17,16 @@ type SendMailResponse struct {
 }
 
 type MailHistoryDetail struct {
-	Id           int    `json:"id"`
-	UserId       int    `json:"userId"`
-	ConfigId     int    `json:"configId"`
-	SenderEmail  string `json:"senderEmail"`
-	Recipient    string `json:"recipient"`
-	Subject      string `json:"subject"`
-	Content      string `json:"content"`
-	Status       string `json:"status"`
-	ErrorMessage string `json:"errorMessage"`
-	SentAt       string `json:"sentAt"`
+	Id           int    `json:"id" gorm:"column:id"`
+	UserId       int    `json:"userId" gorm:"column:refuserid"`
+	ConfigId     int    `json:"configId" gorm:"column:refconfigid"`
+	SenderEmail  string `json:"senderEmail" gorm:"column:sender_email"`
+	Recipient    string `json:"recipient" gorm:"column:recipient"`
+	Subject      string `json:"subject" gorm:"column:subject"`
+	Content      string `json:"content" gorm:"column:content"`
+	Status       string `json:"status" gorm:"column:status"`
+	ErrorMessage string `json:"errorMessage" gorm:"column:errormessage"`
+	SentAt       string `json:"sentAt" gorm:"column:sentat"`
 }
 
 type MailHistoryResponse struct {
