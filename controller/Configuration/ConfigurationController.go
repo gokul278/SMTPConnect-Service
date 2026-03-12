@@ -157,3 +157,52 @@ func UpdateConfigurationController() gin.HandlerFunc {
 		})
 	}
 }
+
+func DeleteConfigurationController() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		inTime := timeZone.GetPacificTime()
+
+		idValue, idExists := c.Get("id")
+		roleIdValue, roleIdExists := c.Get("roleId")
+
+		if !idExists || !roleIdExists {
+			c.JSON(http.StatusUnauthorized, gin.H{
+				"status":  false,
+				"message": "User session not found.",
+			})
+			return
+		}
+
+		type DeleteReq struct {
+			Id int `json:"id"`
+		}
+
+		var reqVal DeleteReq
+		if err := c.BindJSON(&reqVal); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"status":  false,
+				"message": "Invalid request format: " + err.Error(),
+			})
+			return
+		}
+
+		dbConn, sqlDB := db.InitDB()
+		defer sqlDB.Close()
+
+		resVal := configurationservices.DeleteConfigurationService(dbConn, int(idValue.(float64)), reqVal.Id)
+
+		payload := map[string]interface{}{
+			"status":  resVal.Status,
+			"message": resVal.Message,
+			"data":    resVal.Data,
+		}
+
+		token := accesstoken.CreateToken(idValue, roleIdValue)
+		inouttiming.InOutTiming(inTime, timeZone.GetPacificTime(), c.Request.URL.Path)
+
+		c.JSON(resVal.StatusCode, gin.H{
+			"data":  hashapi.Encrypt(payload, true, token),
+			"token": token,
+		})
+	}
+}

@@ -14,5 +14,6 @@ func InitConfigurationRoutes(router *gin.RouterGroup) {
 		route.POST("/add", configurationcontrollers.AddConfigurationController())
 		route.GET("/list", configurationcontrollers.GetConfigurationsController())
 		route.POST("/update", configurationcontrollers.UpdateConfigurationController())
+		route.POST("/delete", configurationcontrollers.DeleteConfigurationController())
 	}
 }
