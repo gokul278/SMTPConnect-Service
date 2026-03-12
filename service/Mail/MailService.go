@@ -1,6 +1,8 @@
 package mailservice
 
 import (
+	"strings"
+
 	logger "smtpconnect/internal/Helper/Logger"
 	configurationmodel "smtpconnect/model/Configuration"
 	mailmodel "smtpconnect/model/Mail"
@@ -47,6 +49,21 @@ func SendMailService(db *gorm.DB, userId int, req mailvalidate.SendMailReq) mail
 		log.Errorf("Failed to send mail: %v", err)
 		history.Status = "failed"
 		history.ErrorMessage = err.Error()
+
+		// Check if error is related to wrong credentials / auth failure
+		errMsg := strings.ToLower(err.Error())
+		if strings.Contains(errMsg, "auth") ||
+			strings.Contains(errMsg, "credential") ||
+			strings.Contains(errMsg, "username") ||
+			strings.Contains(errMsg, "password") ||
+			strings.Contains(errMsg, "535") ||
+			strings.Contains(errMsg, "534") ||
+			strings.Contains(errMsg, "login") {
+			log.Warnf("Authentication error detected, disabling config ID: %d", req.ConfigId)
+			db.Model(&configurationmodel.ConfigurationModel{}).
+				Where("id = ?", req.ConfigId).
+				Update("status", false)
+		}
 	} else {
 		history.Status = "sent"
 	}

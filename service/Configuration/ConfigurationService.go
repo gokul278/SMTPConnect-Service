@@ -53,7 +53,7 @@ func GetAllConfigurationsService(db *gorm.DB, userId int) configurationvalidate.
 	log := logger.InitLogger()
 
 	var configs []configurationmodel.ConfigurationModel
-	if err := db.Where("refuserid = ?", userId).Find(&configs).Error; err != nil {
+	if err := db.Where("refuserid = ? AND delete_status = ?", userId, false).Find(&configs).Error; err != nil {
 		log.Error(err)
 		return configurationvalidate.ConfigurationResponse{
 			Status:     false,
@@ -113,6 +113,37 @@ func UpdateConfigurationService(db *gorm.DB, userId int, configId int, req confi
 		Message:    "Configuration updated and verified successfully",
 		StatusCode: 200,
 		Data:       config,
+	}
+}
+
+func DeleteConfigurationService(db *gorm.DB, userId int, configId int) configurationvalidate.SingleConfigurationResponse {
+	log := logger.InitLogger()
+
+	var config configurationmodel.ConfigurationModel
+	if err := db.Where("id = ? AND refuserid = ? AND delete_status = ?", configId, userId, false).First(&config).Error; err != nil {
+		return configurationvalidate.SingleConfigurationResponse{
+			Status:     false,
+			Message:    "Configuration not found",
+			StatusCode: 404,
+		}
+	}
+
+	config.DeleteStatus = true
+	config.Status = false // also disable it
+
+	if err := db.Save(&config).Error; err != nil {
+		log.Error(err)
+		return configurationvalidate.SingleConfigurationResponse{
+			Status:     false,
+			Message:    "Error deleting configuration",
+			StatusCode: 500,
+		}
+	}
+
+	return configurationvalidate.SingleConfigurationResponse{
+		Status:     true,
+		Message:    "Configuration deleted successfully",
+		StatusCode: 200,
 	}
 }
 
