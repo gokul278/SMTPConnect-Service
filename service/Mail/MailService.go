@@ -1,12 +1,11 @@
 package mailservice
 
 import (
-	"strings"
-
 	logger "smtpconnect/internal/Helper/Logger"
 	configurationmodel "smtpconnect/model/Configuration"
 	mailmodel "smtpconnect/model/Mail"
 	mailvalidate "smtpconnect/validate/Mail"
+	"strings"
 
 	"gopkg.in/gomail.v2"
 	"gorm.io/gorm"
