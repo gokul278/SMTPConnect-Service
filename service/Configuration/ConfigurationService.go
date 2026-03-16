@@ -1,13 +1,11 @@
 package configurationservices
 
 import (
-	"bytes"
-	"encoding/json"
-	"net/http"
 	logger "smtpconnect/internal/Helper/Logger"
 	configurationmodel "smtpconnect/model/Configuration"
 	configurationvalidate "smtpconnect/validate/Configuration"
 
+	"gopkg.in/gomail.v2"
 	"gorm.io/gorm"
 )
 
@@ -149,21 +147,16 @@ func DeleteConfigurationService(db *gorm.DB, userId int, configId int) configura
 	}
 }
 
-func VerifySMTP(host string, port int, email string, password string) bool {
-	proxyURL := "https://smtpconnectservice.gokulhk278.workers.dev/verify"
+func VerifySMTP(host string, port int, user string, password string) bool {
+	log := logger.InitLogger()
+	d := gomail.NewDialer(host, port, user, password)
+	d.TLSConfig = nil // Let gomail handle STARTTLS or SSL/TLS based on port
 
-	payload := map[string]interface{}{
-		"host":     host,
-		"port":     port,
-		"mail_id":  email,
-		"password": password,
-	}
-
-	jsonData, _ := json.Marshal(payload)
-	resp, err := http.Post(proxyURL, "application/json", bytes.NewBuffer(jsonData))
-
-	if err != nil || resp.StatusCode != 200 {
+	closer, err := d.Dial()
+	if err != nil {
+		log.Errorf("SMTP Verification Error for %s: %v", user, err)
 		return false
 	}
+	closer.Close()
 	return true
 }

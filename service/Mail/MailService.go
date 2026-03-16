@@ -1,14 +1,13 @@
 package mailservice
 
 import (
-	"bytes"
-	"encoding/json"
-	"net/http"
 	logger "smtpconnect/internal/Helper/Logger"
 	configurationmodel "smtpconnect/model/Configuration"
 	mailmodel "smtpconnect/model/Mail"
 	mailvalidate "smtpconnect/validate/Mail"
+	"strings"
 
+	"gopkg.in/gomail.v2"
 	"gorm.io/gorm"
 )
 
@@ -19,55 +18,74 @@ func SendMailService(db *gorm.DB, userId int, req mailvalidate.SendMailReq) mail
 	var config configurationmodel.ConfigurationModel
 	if err := db.Where("id = ? AND refuserid = ?", req.ConfigId, userId).First(&config).Error; err != nil {
 		return mailvalidate.SendMailResponse{
-			Status: false, Message: "SMTP Configuration not found", StatusCode: 404,
+			Status:     false,
+			Message:    "SMTP Configuration not found",
+			StatusCode: 404,
 		}
 	}
 
-	// 2. Prepare Payload for Cloudflare Worker
-	proxyURL := "https://smtpconnectservice.gokulhk278.workers.dev"
-	payload := map[string]interface{}{
-		"to":       req.Recipient,
-		"from":     config.MailId,
-		"subject":  req.Subject,
-		"content":  req.Content,
-		"host":     config.MailHost,
-		"port":     config.MailPort,
-		"password": config.MailPassword, // Note: Worker must handle this
-	}
+	// 2. Prepare Email
+	m := gomail.NewMessage()
+	m.SetHeader("From", config.MailId)
+	m.SetHeader("To", req.Recipient)
+	m.SetHeader("Subject", req.Subject)
+	m.SetBody("text/html", req.Content)
 
-	jsonData, _ := json.Marshal(payload)
+	d := gomail.NewDialer(config.MailHost, config.MailPort, config.MailId, config.MailPassword)
+	d.TLSConfig = nil // gomail handles TLS/STARTTLS
 
-	// 3. Send via HTTP POST (Bypasses Render's SMTP Block)
-	resp, err := http.Post(proxyURL, "application/json", bytes.NewBuffer(jsonData))
-
+	// 3. Send and Record History
 	history := mailmodel.MailHistoryModel{
-		UserId: userId, ConfigId: req.ConfigId, Recipient: req.Recipient,
-		Subject: req.Subject, Content: req.Content,
+		UserId:    userId,
+		ConfigId:  req.ConfigId,
+		Recipient: req.Recipient,
+		Subject:   req.Subject,
+		Content:   req.Content,
 	}
 
-	if err != nil || resp.StatusCode != 200 {
-		errorMessage := "Proxy connection failed"
-		if err != nil {
-			errorMessage = err.Error()
-		}
-		log.Errorf("Failed to send mail via proxy: %v", errorMessage)
+	err := d.DialAndSend(m)
+	if err != nil {
+		log.Errorf("Failed to send mail: %v", err)
 		history.Status = "failed"
-		history.ErrorMessage = errorMessage
+		history.ErrorMessage = err.Error()
+
+		// Check if error is related to wrong credentials / auth failure
+		errMsg := strings.ToLower(err.Error())
+		if strings.Contains(errMsg, "auth") ||
+			strings.Contains(errMsg, "credential") ||
+			strings.Contains(errMsg, "username") ||
+			strings.Contains(errMsg, "password") ||
+			strings.Contains(errMsg, "535") ||
+			strings.Contains(errMsg, "534") ||
+			strings.Contains(errMsg, "login") {
+			log.Warnf("Authentication error detected, disabling config ID: %d", req.ConfigId)
+			db.Model(&configurationmodel.ConfigurationModel{}).
+				Where("id = ?", req.ConfigId).
+				Update("status", false)
+		}
 	} else {
 		history.Status = "sent"
 	}
 
-	// 4. Save History and Return
-	db.Create(&history)
+	// 4. Save History to DB
+	if err := db.Create(&history).Error; err != nil {
+		log.Errorf("Failed to save mail history: %v", err)
+	}
 
 	if history.Status == "failed" {
 		return mailvalidate.SendMailResponse{
-			Status: false, Message: "Failed via Proxy: " + history.ErrorMessage, StatusCode: 500,
+			Status:     false,
+			Message:    "Failed to send email: " + history.ErrorMessage,
+			StatusCode: 500,
+			Data:       history,
 		}
 	}
 
 	return mailvalidate.SendMailResponse{
-		Status: true, Message: "Email sent via Cloudflare Proxy", StatusCode: 200,
+		Status:     true,
+		Message:    "Email sent successfully",
+		StatusCode: 200,
+		Data:       history,
 	}
 }
 
