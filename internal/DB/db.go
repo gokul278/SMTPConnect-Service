@@ -29,7 +29,8 @@ func InitDB() (*gorm.DB, *sql.DB) {
 
 	// Connection string
 	dsn := fmt.Sprintf(
-		"host=%s user=%s password=%s dbname=%s port=%s sslmode=require",
+		// "host=%s user=%s password=%s dbname=%s port=%s sslmode=require",
+		"host=%s user=%s password=%s dbname=%s port=%s sslmode=disable",
 		host, user, password, dbname, port,
 	)
 

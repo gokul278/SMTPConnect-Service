@@ -1,9 +1,9 @@
 package configurationservices
 
 import (
-	logger "smtpconnect/internal/Helper/Logger"
-	configurationmodel "smtpconnect/model/Configuration"
-	configurationvalidate "smtpconnect/validate/Configuration"
+	logger "mailstitch/internal/Helper/Logger"
+	configurationmodel "mailstitch/model/Configuration"
+	configurationvalidate "mailstitch/validate/Configuration"
 
 	"gopkg.in/gomail.v2"
 	"gorm.io/gorm"

@@ -1,7 +1,7 @@
 package mailcontent
 
 import (
-	timeZone "smtpconnect/internal/Helper/TimeZone"
+	timeZone "mailstitch/internal/Helper/TimeZone"
 	"html"
 	"os"
 	"strconv"

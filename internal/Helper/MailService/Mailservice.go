@@ -2,7 +2,7 @@ package mailservice
 
 import (
 	"os"
-	logger "smtpconnect/internal/Helper/Logger"
+	logger "mailstitch/internal/Helper/Logger"
 	"strconv"
 
 	"gopkg.in/gomail.v2"

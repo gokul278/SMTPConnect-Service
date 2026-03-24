@@ -1,11 +1,11 @@
 package mainroutes
 
 import (
-	authenticationroutes "smtpconnect/routes/Authentication"
-	configurationroutes "smtpconnect/routes/Configuration"
-	dashboardroutes "smtpconnect/routes/Dashboard"
-	mailroutes "smtpconnect/routes/Mail"
-	userroutes "smtpconnect/routes/User"
+	authenticationroutes "mailstitch/routes/Authentication"
+	configurationroutes "mailstitch/routes/Configuration"
+	dashboardroutes "mailstitch/routes/Dashboard"
+	mailroutes "mailstitch/routes/Mail"
+	userroutes "mailstitch/routes/User"
 
 	"github.com/gin-gonic/gin"
 )

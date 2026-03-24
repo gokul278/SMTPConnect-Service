@@ -1,6 +1,6 @@
 package uservalidate
 
-import usermodel "smtpconnect/model/User"
+import usermodel "mailstitch/model/User"
 
 type GetProfileResponse struct {
 	StatusCode int                        `json:"statusCode"`

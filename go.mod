@@ -1,4 +1,4 @@
-module smtpconnect
+module mailstitch
 
 go 1.25.1
 

@@ -2,14 +2,14 @@ package authenticationservices
 
 import (
 	"net/http"
-	accesstoken "smtpconnect/internal/Helper/AccessToken"
-	audit "smtpconnect/internal/Helper/Audit"
-	becrypt "smtpconnect/internal/Helper/Becrypt"
-	logger "smtpconnect/internal/Helper/Logger"
-	timeZone "smtpconnect/internal/Helper/TimeZone"
-	authenticationmodel "smtpconnect/model/Authentication"
-	authenticationquery "smtpconnect/query/Authentication"
-	authenticationvalidate "smtpconnect/validate/Authentication"
+	accesstoken "mailstitch/internal/Helper/AccessToken"
+	audit "mailstitch/internal/Helper/Audit"
+	becrypt "mailstitch/internal/Helper/Becrypt"
+	logger "mailstitch/internal/Helper/Logger"
+	timeZone "mailstitch/internal/Helper/TimeZone"
+	authenticationmodel "mailstitch/model/Authentication"
+	authenticationquery "mailstitch/query/Authentication"
+	authenticationvalidate "mailstitch/validate/Authentication"
 
 	"gorm.io/gorm"
 )

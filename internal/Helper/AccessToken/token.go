@@ -3,8 +3,8 @@ package accesstoken
 import (
 	"fmt"
 	"os"
-	logger "smtpconnect/internal/Helper/Logger"
-	timeZone "smtpconnect/internal/Helper/TimeZone"
+	logger "mailstitch/internal/Helper/Logger"
+	timeZone "mailstitch/internal/Helper/TimeZone"
 	"strings"
 	"time"
 

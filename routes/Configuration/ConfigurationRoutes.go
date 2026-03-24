@@ -1,8 +1,8 @@
 package configurationroutes
 
 import (
-	configurationcontrollers "smtpconnect/controller/Configuration"
-	accesstoken "smtpconnect/internal/Helper/AccessToken"
+	configurationcontrollers "mailstitch/controller/Configuration"
+	accesstoken "mailstitch/internal/Helper/AccessToken"
 
 	"github.com/gin-gonic/gin"
 )
