@@ -2,13 +2,13 @@ package mailcontrollers
 
 import (
 	"net/http"
-	db "smtpconnect/internal/DB"
-	accesstoken "smtpconnect/internal/Helper/AccessToken"
-	hashapi "smtpconnect/internal/Helper/HashAPI"
-	inouttiming "smtpconnect/internal/Helper/InOutTiming"
-	timeZone "smtpconnect/internal/Helper/TimeZone"
-	mailservices "smtpconnect/service/Mail"
-	mailvalidate "smtpconnect/validate/Mail"
+	db "mailstitch/internal/DB"
+	accesstoken "mailstitch/internal/Helper/AccessToken"
+	hashapi "mailstitch/internal/Helper/HashAPI"
+	inouttiming "mailstitch/internal/Helper/InOutTiming"
+	timeZone "mailstitch/internal/Helper/TimeZone"
+	mailservices "mailstitch/service/Mail"
+	mailvalidate "mailstitch/validate/Mail"
 
 	"github.com/gin-gonic/gin"
 )

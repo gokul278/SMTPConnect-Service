@@ -2,12 +2,12 @@ package usercontrollers
 
 import (
 	"net/http"
-	db "smtpconnect/internal/DB"
-	accesstoken "smtpconnect/internal/Helper/AccessToken"
-	hashapi "smtpconnect/internal/Helper/HashAPI"
-	inouttiming "smtpconnect/internal/Helper/InOutTiming"
-	timeZone "smtpconnect/internal/Helper/TimeZone"
-	userservices "smtpconnect/service/User"
+	db "mailstitch/internal/DB"
+	accesstoken "mailstitch/internal/Helper/AccessToken"
+	hashapi "mailstitch/internal/Helper/HashAPI"
+	inouttiming "mailstitch/internal/Helper/InOutTiming"
+	timeZone "mailstitch/internal/Helper/TimeZone"
+	userservices "mailstitch/service/User"
 
 	"github.com/gin-gonic/gin"
 )

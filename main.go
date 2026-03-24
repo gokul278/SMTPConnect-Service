@@ -5,7 +5,7 @@ import (
 	"log"
 	"net/http"
 	"os"
-	mainroutes "smtpconnect/routes/MainRoutes"
+	mainroutes "mailstitch/routes/MainRoutes"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"

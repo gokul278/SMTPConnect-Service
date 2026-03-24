@@ -2,7 +2,7 @@ package helper
 
 import (
 	"net/http"
-	hashapi "smtpconnect/internal/Helper/HashAPI"
+	hashapi "mailstitch/internal/Helper/HashAPI"
 
 	"github.com/gin-gonic/gin"
 	"github.com/mitchellh/mapstructure"

@@ -1,10 +1,10 @@
 package mailservice
 
 import (
-	logger "smtpconnect/internal/Helper/Logger"
-	configurationmodel "smtpconnect/model/Configuration"
-	mailmodel "smtpconnect/model/Mail"
-	mailvalidate "smtpconnect/validate/Mail"
+	logger "mailstitch/internal/Helper/Logger"
+	configurationmodel "mailstitch/model/Configuration"
+	mailmodel "mailstitch/model/Mail"
+	mailvalidate "mailstitch/validate/Mail"
 	"strings"
 
 	"gopkg.in/gomail.v2"
