@@ -2,11 +2,11 @@ package authenticationcontrollers
 
 import (
 	"net/http"
-	db "smtpconnect/internal/DB"
-	inouttiming "smtpconnect/internal/Helper/InOutTiming"
-	timeZone "smtpconnect/internal/Helper/TimeZone"
-	authenticationservices "smtpconnect/service/Authentication"
-	authenticationvalidate "smtpconnect/validate/Authentication"
+	db "mailstitch/internal/DB"
+	inouttiming "mailstitch/internal/Helper/InOutTiming"
+	timeZone "mailstitch/internal/Helper/TimeZone"
+	authenticationservices "mailstitch/service/Authentication"
+	authenticationvalidate "mailstitch/validate/Authentication"
 
 	"github.com/gin-gonic/gin"
 )

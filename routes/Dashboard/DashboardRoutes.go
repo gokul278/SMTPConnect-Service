@@ -1,8 +1,8 @@
 package dashboardroutes
 
 import (
-	dashboardcontrollers "smtpconnect/controller/Dashboard"
-	accesstoken "smtpconnect/internal/Helper/AccessToken"
+	dashboardcontrollers "mailstitch/controller/Dashboard"
+	accesstoken "mailstitch/internal/Helper/AccessToken"
 
 	"github.com/gin-gonic/gin"
 )

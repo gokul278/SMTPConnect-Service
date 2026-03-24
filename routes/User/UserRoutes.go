@@ -1,8 +1,8 @@
 package userroutes
 
 import (
-	usercontrollers "smtpconnect/controller/User"
-	accesstoken "smtpconnect/internal/Helper/AccessToken"
+	usercontrollers "mailstitch/controller/User"
+	accesstoken "mailstitch/internal/Helper/AccessToken"
 
 	"github.com/gin-gonic/gin"
 )

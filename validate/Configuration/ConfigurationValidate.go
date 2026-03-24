@@ -1,6 +1,6 @@
 package configurationvalidate
 
-import configurationmodel "smtpconnect/model/Configuration"
+import configurationmodel "mailstitch/model/Configuration"
 
 type ConfigReq struct {
 	MailType     string `json:"mailType" validate:"required"`

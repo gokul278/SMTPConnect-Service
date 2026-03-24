@@ -1,7 +1,7 @@
 package authenticationroutes
 
 import (
-	authenticationcontrollers "smtpconnect/controller/Authentication"
+	authenticationcontrollers "mailstitch/controller/Authentication"
 
 	"github.com/gin-gonic/gin"
 )

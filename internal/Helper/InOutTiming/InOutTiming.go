@@ -1,7 +1,7 @@
 package inouttiming
 
 import (
-	logger "smtpconnect/internal/Helper/Logger"
+	logger "mailstitch/internal/Helper/Logger"
 )
 
 func InOutTiming(inTime string, outTime string, path string) {

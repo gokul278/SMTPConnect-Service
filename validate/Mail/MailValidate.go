@@ -1,6 +1,6 @@
 package mailvalidate
 
-import mailmodel "smtpconnect/model/Mail"
+import mailmodel "mailstitch/model/Mail"
 
 type SendMailReq struct {
 	ConfigId  int    `json:"configId" validate:"required"`

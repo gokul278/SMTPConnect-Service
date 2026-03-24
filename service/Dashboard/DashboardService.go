@@ -1,7 +1,7 @@
 package dashboardservice
 
 import (
-	dashboardvalidate "smtpconnect/validate/Dashboard"
+	dashboardvalidate "mailstitch/validate/Dashboard"
 	"time"
 	"gorm.io/gorm"
 )

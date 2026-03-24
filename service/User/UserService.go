@@ -1,10 +1,10 @@
 package userservices
 
 import (
-	logger "smtpconnect/internal/Helper/Logger"
-	usermodel "smtpconnect/model/User"
-	userquery "smtpconnect/query/User"
-	uservalidate "smtpconnect/validate/User"
+	logger "mailstitch/internal/Helper/Logger"
+	usermodel "mailstitch/model/User"
+	userquery "mailstitch/query/User"
+	uservalidate "mailstitch/validate/User"
 
 	"gorm.io/gorm"
 )

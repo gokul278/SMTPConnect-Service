@@ -1,7 +1,7 @@
 package audit
 
 import (
-	logger "smtpconnect/internal/Helper/Logger"
+	logger "mailstitch/internal/Helper/Logger"
 
 	"gorm.io/gorm"
 )
