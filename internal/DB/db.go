@@ -4,7 +4,6 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
-	"os"
 
 	"github.com/joho/godotenv"
 	"gorm.io/driver/postgres"
@@ -21,15 +20,15 @@ func init() {
 
 func InitDB() (*gorm.DB, *sql.DB) {
 	// Get environment variables
-	host := os.Getenv("DB_HOST")
-	user := os.Getenv("DB_USER")
-	password := os.Getenv("DB_PASSWORD")
-	dbname := os.Getenv("DB_NAME")
-	port := os.Getenv("DB_PORT")
+	host := "ep-fancy-voice-akvqlsr2-pooler.c-3.us-west-2.aws.neon.tech"
+	user := "neondb_owner"
+	password := "npg_TSBVC6ubwr7e"
+	dbname := "neondb"
+	port := "5432"
 
 	// Connection string
 	dsn := fmt.Sprintf(
-		// "host=%s user=%s password=%s dbname=%s port=%s sslmode=require",
+		"host=%s user=%s password=%s dbname=%s port=%s sslmode=require",
 		// "host=%s user=%s password=%s dbname=%s port=%s sslmode=disable",
 		host, user, password, dbname, port,
 	)
